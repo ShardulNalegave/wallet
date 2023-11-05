@@ -6,6 +6,8 @@ class AppTheme {
       const Color.fromARGB(255, 105, 184, 164).withOpacity(0.7);
   static final primaryDark = const Color(0xFF244E48).withOpacity(0.6);
   static const secondaryColor = Color.fromARGB(255, 4, 7, 7);
+  static const incomeColor = Color(0xFF3F51B5);
+  static const expenseColor = Color(0xFFE53935);
 
   static final textFont = GoogleFonts.nunito();
   static final headingFont = GoogleFonts.raleway();
@@ -16,6 +18,10 @@ class AppTheme {
   static ThemeData getThemeData() {
     return ThemeData(
       useMaterial3: true,
+      colorScheme: ColorScheme.dark(
+        primary: primaryDark,
+        secondary: secondaryColor,
+      ),
       textTheme: TextTheme(
         displayLarge: AppTheme.headingFont.copyWith(color: Colors.white),
         displayMedium: AppTheme.headingFont.copyWith(color: Colors.white),

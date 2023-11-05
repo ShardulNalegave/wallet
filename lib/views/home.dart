@@ -104,7 +104,8 @@ class HomeView extends HookConsumerWidget {
                       const Color(0xFF3F51B5).withOpacity(0.05),
                     ),
                   ),
-                  onPressed: () {},
+                  onPressed: () =>
+                      Navigator.of(context).pushNamed('/addIncome'),
                 ),
               ),
               const SizedBox(width: 15.0),

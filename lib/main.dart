@@ -12,11 +12,12 @@ class Wallet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
+    return MaterialApp(
       title: 'Wallet',
       debugShowCheckedModeBanner: false,
       theme: AppTheme.getThemeData(),
-      routerConfig: router,
+      routes: routes,
+      initialRoute: '/',
     );
   }
 }
