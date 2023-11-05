@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wallet/router.dart';
 import 'package:wallet/theme.dart';
 
 void main() {
-  runApp(const Wallet());
+  runApp(const ProviderScope(child: Wallet()));
 }
 
 class Wallet extends StatelessWidget {

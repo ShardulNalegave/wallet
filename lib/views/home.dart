@@ -1,19 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:wallet/components/tabs.dart';
 import 'package:wallet/theme.dart';
+import 'package:wallet/views/home/analytics.dart';
+import 'package:wallet/views/home/transactions.dart';
 
-class HomeView extends StatefulHookConsumerWidget {
+enum HomeViewTabs {
+  transactions,
+  analytics,
+}
+
+class HomeView extends HookConsumerWidget {
   const HomeView({super.key});
 
   @override
-  ConsumerState<ConsumerStatefulWidget> createState() => _HomeViewState();
-}
+  Widget build(BuildContext context, WidgetRef ref) {
+    final selectedTab = useState(HomeViewTabs.transactions);
 
-class _HomeViewState extends ConsumerState<HomeView> {
-  @override
-  Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
       systemNavigationBarColor: AppTheme.secondaryColor,
       systemNavigationBarIconBrightness: Brightness.light,
@@ -123,24 +129,27 @@ class _HomeViewState extends ConsumerState<HomeView> {
               const SizedBox(width: 15.0),
             ],
           ),
-        ],
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: AppTheme.secondaryColor,
-        selectedItemColor: AppTheme.primaryLight,
-        unselectedItemColor: Colors.white.withOpacity(0.3),
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(FontAwesomeIcons.house),
-            label: 'Home',
+          Expanded(
+            child: switch (selectedTab.value) {
+              HomeViewTabs.transactions => const HomeViewTransactionsTab(),
+              HomeViewTabs.analytics => const HomeViewAnalyticsTab(),
+            },
           ),
-          BottomNavigationBarItem(
-            icon: Icon(FontAwesomeIcons.chartLine),
-            label: 'Analytics',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(FontAwesomeIcons.gear),
-            label: 'Settings',
+          BottomTabBar(
+            children: [
+              BottomTab(
+                label: 'Transactions',
+                icon: FontAwesomeIcons.list,
+                selected: selectedTab.value == HomeViewTabs.transactions,
+                onTap: () => selectedTab.value = HomeViewTabs.transactions,
+              ),
+              BottomTab(
+                label: 'Analytics',
+                icon: FontAwesomeIcons.chartLine,
+                selected: selectedTab.value == HomeViewTabs.analytics,
+                onTap: () => selectedTab.value = HomeViewTabs.analytics,
+              ),
+            ],
           ),
         ],
       ),
